@@ -19,6 +19,12 @@ class DriverLicenseUpdateForm(forms.ModelForm):
         model = Driver
         fields = ("license_number",)
 
+    def clean_driver_license(self):
+        license_number = self.cleaned_data["license_number"]
+        Driver.license_validator(license_number)
+        return license_number
+
+
 
 class CarCreationForm(forms.ModelForm):
     drivers = forms.ModelMultipleChoiceField(
